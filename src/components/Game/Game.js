@@ -8,12 +8,13 @@ import Anwsers from '../Anwsers/Anwsers';
 import Lifelines from '../Lifelines/Lifelines';
 import Modal from '../Modal/Modal';
 import Backdrop from '../Backdrop/Backdrop';
+import Logo from '../Logo/Logo';
+import Spinner from '../Spinner/Spinner';
+import Sidedrawer from '../Sidedrawer/Sidedrawer';
+import MoneyLadder from '../MoneyLadder/MoneyLadder';
 
 import money from '../../utils/money';
 import { gameWonMessage, gameLostMessage } from '../../utils/endgameMessages';
-
-import logo from '../../assets/png/logo.png';
-import logoFloat from '../../utils/logoFloatKeyframes';
 
 const StyledGame = styled.div`
   display: flex;
@@ -22,20 +23,6 @@ const StyledGame = styled.div`
   width: 100%;
   max-width: 50rem;
   margin-bottom: 0.5rem;
-
-  main {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    z-index: -2;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 30rem;
-    img {
-      width: 100%;
-      animation: ${logoFloat} 5s infinite;
-    }
-  }
 `;
 
 function Game() {
@@ -47,6 +34,7 @@ function Game() {
   const [isGameWon, setIsGameWon] = useState(false);
   const [isGameLost, setIsGameLost] = useState(false);
   const { width, height } = useWindowSize();
+  const [isSidedrawerVisible, setIsSidedrawerVisible] = useState(false);
 
   useEffect(() => fetchQuestionsFromAPI(), []);
 
@@ -74,7 +62,7 @@ function Game() {
   async function fetchQuestionsFromAPI() {
     setCurrentQuestionIndex(0);
     const res = await fetch(
-      'https://opentdb.com/api.php?amount=3&type=multiple'
+      'https://opentdb.com/api.php?amount=15&type=multiple'
     );
     const { results } = await res.json();
     setQuestions(results);
@@ -101,9 +89,15 @@ function Game() {
     setIsLoading(true);
   }
 
-  const question = !isLoading
-    ? questions[currentQuestionIndex].question
-    : 'Loading...';
+  function toggleSidedrawerHandler() {
+    setIsSidedrawerVisible((prevState) => !prevState);
+  }
+
+  const question = !isLoading ? (
+    questions[currentQuestionIndex].question
+  ) : (
+    <Spinner />
+  );
 
   const anwsers = !isLoading ? (
     <Anwsers
@@ -119,11 +113,15 @@ function Game() {
 
   return (
     <StyledGame>
-      <main>
-        <img src={logo} alt="who wants to be a millionaire logo" />
-      </main>
+      <Logo />
       <Lifelines />
-      <Question money={money[currentQuestionIndex]}>{question}</Question>
+      <Question
+        isLoading={isLoading}
+        money={money[currentQuestionIndex]}
+        toggleSidedrawer={toggleSidedrawerHandler}
+      >
+        {question}
+      </Question>
       {anwsers}
       {isEndgameModalVisible && (
         <>
@@ -140,6 +138,12 @@ function Game() {
       {isEndgameModalVisible && isGameWon && (
         <Confetti width={width} height={height} />
       )}
+      <Sidedrawer isSidedrawerVisible={isSidedrawerVisible}>
+        <MoneyLadder
+          money={money[currentQuestionIndex]}
+          toggleSidedrawer={toggleSidedrawerHandler}
+        />
+      </Sidedrawer>
     </StyledGame>
   );
 }

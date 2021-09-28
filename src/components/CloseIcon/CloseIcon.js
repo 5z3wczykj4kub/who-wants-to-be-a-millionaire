@@ -11,6 +11,13 @@ const StyledCloseIcon = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
+  transition: transform 0.2s;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: rotate(-90deg);
+    }
+  }
 
   span {
     display: block;
@@ -25,7 +32,8 @@ const StyledCloseIcon = styled.button`
       position: absolute;
       width: 100%;
       height: 0.25rem;
-      background-color: #000;
+      background-color: ${(props) =>
+        props.color ? props.color : props.theme.primaryColor};
       border-radius: 0.25rem;
     }
 
@@ -43,7 +51,7 @@ const StyledCloseIcon = styled.button`
 
 function CloseIcon(props) {
   return (
-    <StyledCloseIcon onClick={props.closeEndgameModal}>
+    <StyledCloseIcon color={props.color} onClick={props.onClick}>
       <span></span>
     </StyledCloseIcon>
   );

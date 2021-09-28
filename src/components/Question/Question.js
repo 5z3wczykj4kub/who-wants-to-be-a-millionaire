@@ -18,8 +18,12 @@ const StyledQuestion = styled.div`
 function Question(props) {
   return (
     <StyledQuestion>
-      <Money>{props.money}</Money>
-      <p dangerouslySetInnerHTML={{ __html: props.children }}></p>
+      <Money toggleSidedrawer={props.toggleSidedrawer}>{props.money}</Money>
+      {props.isLoading ? (
+        <p>{props.children}</p>
+      ) : (
+        <p dangerouslySetInnerHTML={{ __html: props.children }}></p>
+      )}
     </StyledQuestion>
   );
 }

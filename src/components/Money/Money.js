@@ -15,10 +15,20 @@ const StyledMoney = styled.div`
   border-radius: 0.5rem;
   background-color: ${(props) => props.theme.hoverAnwserColor};
   color: #000;
+  cursor: pointer;
+  transition: transform 50ms;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+  }
 `;
 
 function Money(props) {
-  return <StyledMoney>{props.children}</StyledMoney>;
+  return (
+    <StyledMoney onClick={props.toggleSidedrawer}>{props.children}</StyledMoney>
+  );
 }
 
 export default Money;

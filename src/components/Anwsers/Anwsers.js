@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Anwser from '../Anwser/Anwser';
 
 import fisherYatesShuffle from '../../utils/fisherYatesShuffle';
+import Spinner from '../Spinner/Spinner';
 
 const StyledAnwsers = styled.div`
   width: 100%;
@@ -21,10 +22,18 @@ function Anwsers(props) {
 
   let anwsersList = (
     <>
-      <Anwser letter="a">Loading...</Anwser>
-      <Anwser letter="b">Loading...</Anwser>
-      <Anwser letter="c">Loading...</Anwser>
-      <Anwser letter="d">Loading...</Anwser>
+      <Anwser letter="a" isLoading={props.isLoading}>
+        <Spinner />
+      </Anwser>
+      <Anwser letter="b" isLoading={props.isLoading}>
+        <Spinner />
+      </Anwser>
+      <Anwser letter="c" isLoading={props.isLoading}>
+        <Spinner />
+      </Anwser>
+      <Anwser letter="d" isLoading={props.isLoading}>
+        <Spinner />
+      </Anwser>
     </>
   );
 
@@ -37,6 +46,7 @@ function Anwsers(props) {
         isCorrectHighlighted={
           props.correctAnwser === anwser ? props.isCorrectHighlighted : false
         }
+        isLoading={props.isLoading}
       >
         {anwser}
       </Anwser>

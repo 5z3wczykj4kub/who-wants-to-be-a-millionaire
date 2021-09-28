@@ -8,18 +8,19 @@ const StyledButton = styled.button`
   align-items: center;
   width: 100%;
   max-width: 14rem;
-  margin: 0.25rem auto 0 auto;
-  padding: 0.25rem 0.5rem;
-  background-color: ${(props) => props.theme.secondaryColor};
+  margin: 0.5rem auto 0 auto;
+  padding: 0.3rem 0.5rem;
+  background-color: ${(props) => props.theme.primaryColor};
   color: #fff;
-  border: 2px solid ${(props) => props.theme.secondaryColor};
-  border-radius: 1rem;
+  border: 2px solid ${(props) => props.theme.primaryColor};
+  border-radius: 2rem;
   font-size: 1.2rem;
   cursor: pointer;
+  transition: transform 50ms;
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      filter: brightness(1.2);
+      transform: scale(1.1);
     }
   }
 `;

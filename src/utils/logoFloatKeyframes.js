@@ -1,6 +1,6 @@
 import { keyframes } from 'styled-components';
 
-const logoFloat = keyframes`
+const logoFloatAnimation = keyframes`
   0% {
     transform: scale(1);
   }
@@ -14,4 +14,4 @@ const logoFloat = keyframes`
   }
 `;
 
-export default logoFloat;
+export default logoFloatAnimation;

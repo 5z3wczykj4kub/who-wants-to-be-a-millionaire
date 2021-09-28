@@ -49,7 +49,11 @@ function Anwser(props) {
     >
       <Diamond />
       <span>{props.letter}:</span>
-      <p dangerouslySetInnerHTML={{ __html: props.children }}></p>
+      {props.isLoading ? (
+        <p>{props.children}</p>
+      ) : (
+        <p dangerouslySetInnerHTML={{ __html: props.children }}></p>
+      )}
     </StyledAnwser>
   );
 }

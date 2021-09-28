@@ -1,6 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUndoAlt } from '@fortawesome/free-solid-svg-icons';
-
 import styled from 'styled-components';
 import Button from '../Button/Button';
 import CloseIcon from '../CloseIcon/CloseIcon';
@@ -11,8 +8,9 @@ const StyledModal = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
-  max-width: 50rem;
+  max-width: 30rem;
   padding: 0.5rem;
+  padding-bottom: 1rem;
   background-color: ${(props) => props.theme.hoverAnwserColor};
   border-radius: 0.25rem;
   text-align: center;
@@ -30,6 +28,7 @@ const StyledModal = styled.div`
     width: 100%;
     max-width: ${(props) => (props.isGameWon ? '20rem' : '14rem')};
     max-height: 14rem;
+    margin-bottom: 0.5rem;
     border-radius: 0.25rem;
   }
 `;
@@ -37,12 +36,9 @@ const StyledModal = styled.div`
 function Modal(props) {
   return (
     <StyledModal isGameWon={props.isGameWon}>
-      <CloseIcon closeEndgameModal={props.closeEndgameModal} />
+      <CloseIcon onClick={props.closeEndgameModal} />
       <div>{props.children}</div>
-      <Button onClick={props.closeEndgameModal}>
-        <FontAwesomeIcon icon={faUndoAlt} />
-        Play again
-      </Button>
+      <Button onClick={props.closeEndgameModal}>Play again</Button>
     </StyledModal>
   );
 }

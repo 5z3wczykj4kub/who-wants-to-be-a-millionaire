@@ -5,7 +5,7 @@ export const gameWonMessage = (
   <>
     <img src={happyPepeGif} alt="happy pepe gif" />
     <p>
-      <span>Congratulations!</span>{' '}
+      <span>Congratulations!</span>
     </p>
     <p>You're officially a millionaire.</p>
   </>
