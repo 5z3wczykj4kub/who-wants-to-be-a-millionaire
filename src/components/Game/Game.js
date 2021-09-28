@@ -39,6 +39,8 @@ function Game() {
     useState(false);
   const [isFiftyFiftyLifelineDisabled, setIsFiftyFiftyLifelineDisabled] =
     useState(false);
+  const [isChangeQuestionLifelineUsed, setIsChangeQuestionLifelineUsed] =
+    useState(false);
 
   useEffect(() => fetchQuestionsFromAPI(), []);
 
@@ -67,7 +69,7 @@ function Game() {
   async function fetchQuestionsFromAPI() {
     setCurrentQuestionIndex(0);
     const res = await fetch(
-      'https://opentdb.com/api.php?amount=15&type=multiple'
+      'https://opentdb.com/api.php?amount=16&type=multiple'
     );
     const { results } = await res.json();
     setQuestions(results);
@@ -76,7 +78,7 @@ function Game() {
 
   function checkAnwserHandler(anwser) {
     if (anwser === questions[currentQuestionIndex].correct_answer) {
-      if (currentQuestionIndex === questions.length - 1) {
+      if (currentQuestionIndex === questions.length - 2) {
         setIsGameWon(true);
         return;
       }
@@ -92,6 +94,7 @@ function Game() {
     setIsEndgameModalVisible(false);
     setIsFiftyFiftyLifelineUsed(false);
     setIsFiftyFiftyLifelineDisabled(false);
+    setIsChangeQuestionLifelineUsed(false);
     fetchQuestionsFromAPI();
     setIsLoading(true);
   }
@@ -104,6 +107,19 @@ function Game() {
     if (isFiftyFiftyLifelineDisabled) return;
     setIsFiftyFiftyLifelineUsed(true);
     setIsFiftyFiftyLifelineDisabled(true);
+  }
+
+  function useChangeQuestionHandler() {
+    if (!isChangeQuestionLifelineUsed) {
+      setQuestions((prevQuestions) => {
+        const newQuestions = [...prevQuestions];
+        newQuestions[currentQuestionIndex] =
+          prevQuestions[prevQuestions.length - 1];
+        return newQuestions;
+      });
+      setIsChangeQuestionLifelineUsed(true);
+      if (isFiftyFiftyLifelineDisabled) setIsFiftyFiftyLifelineUsed(false);
+    }
   }
 
   const question = !isLoading ? (
@@ -134,8 +150,9 @@ function Game() {
       <Logo />
       <Lifelines
         isFiftyFiftyLifelineDisabled={isFiftyFiftyLifelineDisabled}
-        isFiftyFiftyLifelineUsed={isFiftyFiftyLifelineUsed}
+        isChangeQuestionLifelineUsed={isChangeQuestionLifelineUsed}
         useFiftyFiftyLifeline={useFiftyFiftyLifelineHandler}
+        useChangeQuestion={useChangeQuestionHandler}
       />
       <Question
         isLoading={isLoading}

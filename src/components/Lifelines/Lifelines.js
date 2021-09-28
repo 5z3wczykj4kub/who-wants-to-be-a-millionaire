@@ -15,13 +15,16 @@ function Lifelines(props) {
   return (
     <Styledlifelines>
       <Lifeline
-        isFiftyFiftyLifelineDisabled={props.isFiftyFiftyLifelineDisabled}
-        isFiftyFiftyLifelineUsed={props.isFiftyFiftyLifelineUsed}
+        isDisabled={props.isFiftyFiftyLifelineDisabled}
         onClick={props.useFiftyFiftyLifeline}
       />
       <Lifeline icon={faPhone} />
       <Lifeline icon={faUsers} />
-      <Lifeline icon={faSyncAlt} />
+      <Lifeline
+        icon={faSyncAlt}
+        isDisabled={props.isChangeQuestionLifelineUsed}
+        onClick={props.useChangeQuestion}
+      />
     </Styledlifelines>
   );
 }
