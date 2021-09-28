@@ -11,10 +11,14 @@ const Styledlifelines = styled.div`
   margin-top: 0.75rem;
 `;
 
-function Lifelines() {
+function Lifelines(props) {
   return (
     <Styledlifelines>
-      <Lifeline />
+      <Lifeline
+        isFiftyFiftyLifelineDisabled={props.isFiftyFiftyLifelineDisabled}
+        isFiftyFiftyLifelineUsed={props.isFiftyFiftyLifelineUsed}
+        onClick={props.useFiftyFiftyLifeline}
+      />
       <Lifeline icon={faPhone} />
       <Lifeline icon={faUsers} />
       <Lifeline icon={faSyncAlt} />

@@ -17,14 +17,16 @@ const StyledAnwser = styled.button`
       ? props.theme.correctAnwserColor
       : props.theme.secondaryColor};
   color: ${(props) => (props.isCorrectHighlighted ? '#000' : '#fff')};
-  cursor: pointer;
+  cursor: ${(props) => (!props.isEmpty ? 'pointer' : 'default')};
 
   @media (hover: hover) and (pointer: fine) {
     &:hover {
       background-color: ${(props) =>
-        !props.isCorrectHighlighted
-          ? props.theme.hoverAnwserColor
-          : props.theme.correctAnwserColor};
+        !props.isEmpty
+          ? !props.isCorrectHighlighted
+            ? props.theme.hoverAnwserColor
+            : props.theme.correctAnwserColor
+          : ''};
       color: #000;
 
       span {
@@ -34,6 +36,7 @@ const StyledAnwser = styled.button`
   }
 
   span {
+    visibility: ${(props) => (props.isEmpty ? 'hidden' : 'visible')};
     text-transform: capitalize;
     font-weight: bold;
     color: ${(props) =>
@@ -44,10 +47,14 @@ const StyledAnwser = styled.button`
 function Anwser(props) {
   return (
     <StyledAnwser
+      isEmpty={props.isEmpty}
       isCorrectHighlighted={props.isCorrectHighlighted}
-      onClick={() => props.checkAnwser(props.children)}
+      onClick={() => {
+        if (props.isEmpty) return;
+        props.checkAnwser(props.children);
+      }}
     >
-      <Diamond />
+      {!props.isEmpty && <Diamond />}
       <span>{props.letter}:</span>
       {props.isLoading ? (
         <p>{props.children}</p>

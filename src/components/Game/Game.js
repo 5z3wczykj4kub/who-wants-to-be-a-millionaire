@@ -35,6 +35,10 @@ function Game() {
   const [isGameLost, setIsGameLost] = useState(false);
   const { width, height } = useWindowSize();
   const [isSidedrawerVisible, setIsSidedrawerVisible] = useState(false);
+  const [isFiftyFiftyLifelineUsed, setIsFiftyFiftyLifelineUsed] =
+    useState(false);
+  const [isFiftyFiftyLifelineDisabled, setIsFiftyFiftyLifelineDisabled] =
+    useState(false);
 
   useEffect(() => fetchQuestionsFromAPI(), []);
 
@@ -44,6 +48,7 @@ function Game() {
         const timeoutId = setTimeout(() => {
           setCurrentQuestionIndex((prevState) => prevState + 1);
           setIsCorrectHighlighted(false);
+          setIsFiftyFiftyLifelineUsed(false);
           clearTimeout(timeoutId);
         }, 1000);
       }
@@ -85,12 +90,20 @@ function Game() {
     if (isGameWon) setIsGameWon(false);
     if (isGameLost) setIsGameLost(false);
     setIsEndgameModalVisible(false);
+    setIsFiftyFiftyLifelineUsed(false);
+    setIsFiftyFiftyLifelineDisabled(false);
     fetchQuestionsFromAPI();
     setIsLoading(true);
   }
 
   function toggleSidedrawerHandler() {
     setIsSidedrawerVisible((prevState) => !prevState);
+  }
+
+  function useFiftyFiftyLifelineHandler() {
+    if (isFiftyFiftyLifelineDisabled) return;
+    setIsFiftyFiftyLifelineUsed(true);
+    setIsFiftyFiftyLifelineDisabled(true);
   }
 
   const question = !isLoading ? (
@@ -105,6 +118,11 @@ function Game() {
       isCorrectHighlighted={isCorrectHighlighted}
       correctAnwser={questions[currentQuestionIndex].correct_answer}
       incorrectAnwsers={questions[currentQuestionIndex].incorrect_answers}
+      remainingIncorrectAnwser={
+        isFiftyFiftyLifelineUsed
+          ? questions[currentQuestionIndex].incorrect_answers[0]
+          : null
+      }
       checkAnwser={checkAnwserHandler}
     />
   ) : (
@@ -114,7 +132,11 @@ function Game() {
   return (
     <StyledGame>
       <Logo />
-      <Lifelines />
+      <Lifelines
+        isFiftyFiftyLifelineDisabled={isFiftyFiftyLifelineDisabled}
+        isFiftyFiftyLifelineUsed={isFiftyFiftyLifelineUsed}
+        useFiftyFiftyLifeline={useFiftyFiftyLifelineHandler}
+      />
       <Question
         isLoading={isLoading}
         money={money[currentQuestionIndex]}

@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import Anwser from '../Anwser/Anwser';
+import Spinner from '../Spinner/Spinner';
 
 import fisherYatesShuffle from '../../utils/fisherYatesShuffle';
-import Spinner from '../Spinner/Spinner';
 
 const StyledAnwsers = styled.div`
   width: 100%;
@@ -51,6 +51,35 @@ function Anwsers(props) {
         {anwser}
       </Anwser>
     ));
+
+    if (props.remainingIncorrectAnwser) {
+      anwsersList = anwsers.map((anwser, index) => {
+        if (
+          anwser !== props.remainingIncorrectAnwser &&
+          anwser !== props.correctAnwser
+        ) {
+          return (
+            <Anwser key={String.fromCharCode(97 + index)} isEmpty={true} />
+          );
+        } else {
+          return (
+            <Anwser
+              key={String.fromCharCode(97 + index)}
+              letter={String.fromCharCode(97 + index)}
+              checkAnwser={props.checkAnwser}
+              isCorrectHighlighted={
+                props.correctAnwser === anwser
+                  ? props.isCorrectHighlighted
+                  : false
+              }
+              isLoading={props.isLoading}
+            >
+              {anwser}
+            </Anwser>
+          );
+        }
+      });
+    }
   }
 
   console.log(props.correctAnwser);
