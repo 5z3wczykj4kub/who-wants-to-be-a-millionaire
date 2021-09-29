@@ -9,7 +9,7 @@ const StyledSpinner = styled.span`
   border: 3px solid #fff;
   border-right-color: transparent;
   border-radius: 50%;
-  animation: ${spinnerAnimation} 2s infinite;
+  animation: ${spinnerAnimation} 2s linear infinite;
 `;
 
 function Spinner() {

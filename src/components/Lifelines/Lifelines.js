@@ -19,11 +19,15 @@ function Lifelines(props) {
         onClick={props.useFiftyFiftyLifeline}
       />
       <Lifeline icon={faPhone} />
-      <Lifeline icon={faUsers} />
+      <Lifeline
+        icon={faUsers}
+        isDisabled={props.isAskTheAudienceLifelineUsed}
+        onClick={props.showAskTheAudienceBarGraph}
+      />
       <Lifeline
         icon={faSyncAlt}
         isDisabled={props.isChangeQuestionLifelineUsed}
-        onClick={props.useChangeQuestion}
+        onClick={props.useChangeQuestionLifeline}
       />
     </Styledlifelines>
   );

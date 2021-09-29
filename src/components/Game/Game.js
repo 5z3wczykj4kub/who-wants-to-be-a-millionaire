@@ -12,6 +12,9 @@ import Logo from '../Logo/Logo';
 import Spinner from '../Spinner/Spinner';
 import Sidedrawer from '../Sidedrawer/Sidedrawer';
 import MoneyLadder from '../MoneyLadder/MoneyLadder';
+import AskTheAudience from '../AskTheAudience/AskTheAudience';
+import CloseIcon from '../CloseIcon/CloseIcon';
+import Button from '../Button/Button';
 
 import money from '../../utils/money';
 import { gameWonMessage, gameLostMessage } from '../../utils/endgameMessages';
@@ -41,6 +44,18 @@ function Game() {
     useState(false);
   const [isChangeQuestionLifelineUsed, setIsChangeQuestionLifelineUsed] =
     useState(false);
+  const [isAskTheAudienceLifelineUsed, setIsAskTheAudienceLifelineUsed] =
+    useState(false);
+  const [isAskTheAudienceBarGraphVisible, setIsAskTheAudienceBarGraphVisible] =
+    useState(false);
+
+  useEffect(
+    function outputCorrectAnwsersInDevToolsConsole() {
+      if (questions.length > 0)
+        console.log(questions[currentQuestionIndex].correct_answer);
+    },
+    [currentQuestionIndex, questions]
+  );
 
   useEffect(() => fetchQuestionsFromAPI(), []);
 
@@ -89,14 +104,7 @@ function Game() {
   }
 
   function closeEndgameModalHandler() {
-    if (isGameWon) setIsGameWon(false);
-    if (isGameLost) setIsGameLost(false);
-    setIsEndgameModalVisible(false);
-    setIsFiftyFiftyLifelineUsed(false);
-    setIsFiftyFiftyLifelineDisabled(false);
-    setIsChangeQuestionLifelineUsed(false);
-    fetchQuestionsFromAPI();
-    setIsLoading(true);
+    resetTheGame();
   }
 
   function toggleSidedrawerHandler() {
@@ -109,7 +117,7 @@ function Game() {
     setIsFiftyFiftyLifelineDisabled(true);
   }
 
-  function useChangeQuestionHandler() {
+  function useChangeQuestionLifelineHandler() {
     if (!isChangeQuestionLifelineUsed) {
       setQuestions((prevQuestions) => {
         const newQuestions = [...prevQuestions];
@@ -120,6 +128,28 @@ function Game() {
       setIsChangeQuestionLifelineUsed(true);
       if (isFiftyFiftyLifelineDisabled) setIsFiftyFiftyLifelineUsed(false);
     }
+  }
+
+  function showAskTheAudienceBarGraphHandler() {
+    if (isAskTheAudienceLifelineUsed) return;
+    setIsAskTheAudienceBarGraphVisible(true);
+    setIsAskTheAudienceLifelineUsed(true);
+  }
+
+  function hideAskTheAudienceBarGraphHandler() {
+    setIsAskTheAudienceBarGraphVisible(false);
+  }
+
+  function resetTheGame() {
+    if (isGameWon) setIsGameWon(false);
+    if (isGameLost) setIsGameLost(false);
+    setIsEndgameModalVisible(false);
+    setIsFiftyFiftyLifelineUsed(false);
+    setIsFiftyFiftyLifelineDisabled(false);
+    setIsChangeQuestionLifelineUsed(false);
+    setIsAskTheAudienceLifelineUsed(false);
+    fetchQuestionsFromAPI();
+    setIsLoading(true);
   }
 
   const question = !isLoading ? (
@@ -151,8 +181,10 @@ function Game() {
       <Lifelines
         isFiftyFiftyLifelineDisabled={isFiftyFiftyLifelineDisabled}
         isChangeQuestionLifelineUsed={isChangeQuestionLifelineUsed}
+        isAskTheAudienceLifelineUsed={isAskTheAudienceLifelineUsed}
         useFiftyFiftyLifeline={useFiftyFiftyLifelineHandler}
-        useChangeQuestion={useChangeQuestionHandler}
+        useChangeQuestionLifeline={useChangeQuestionLifelineHandler}
+        showAskTheAudienceBarGraph={showAskTheAudienceBarGraphHandler}
       />
       <Question
         isLoading={isLoading}
@@ -162,15 +194,25 @@ function Game() {
         {question}
       </Question>
       {anwsers}
+      {isAskTheAudienceBarGraphVisible && (
+        <>
+          <Backdrop onClick={hideAskTheAudienceBarGraphHandler} />
+          <AskTheAudience>
+            <CloseIcon
+              color="#fff"
+              onClick={hideAskTheAudienceBarGraphHandler}
+            />
+          </AskTheAudience>
+        </>
+      )}
       {isEndgameModalVisible && (
         <>
-          <Backdrop closeEndgameModal={closeEndgameModalHandler} />
-          <Modal
-            isGameWon={isGameWon}
-            closeEndgameModal={closeEndgameModalHandler}
-          >
+          <Backdrop onClick={closeEndgameModalHandler} />
+          <Modal isGameWon={isGameWon}>
+            <CloseIcon onClick={closeEndgameModalHandler} />
             {isGameWon && gameWonMessage}
             {isGameLost && gameLostMessage}
+            <Button onClick={closeEndgameModalHandler}>Play again</Button>
           </Modal>
         </>
       )}

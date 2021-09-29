@@ -82,8 +82,6 @@ function Anwsers(props) {
     }
   }
 
-  console.log(props.correctAnwser);
-
   return <StyledAnwsers>{anwsersList}</StyledAnwsers>;
 }
 

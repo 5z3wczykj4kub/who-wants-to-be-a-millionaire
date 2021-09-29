@@ -9,7 +9,7 @@ const StyledBackdrop = styled.div`
 `;
 
 function Backdrop(props) {
-  return <StyledBackdrop onClick={props.closeEndgameModal} />;
+  return <StyledBackdrop onClick={props.onClick} />;
 }
 
 export default Backdrop;

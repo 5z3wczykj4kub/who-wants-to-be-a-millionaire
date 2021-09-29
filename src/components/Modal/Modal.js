@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import Button from '../Button/Button';
-import CloseIcon from '../CloseIcon/CloseIcon';
 
 const StyledModal = styled.div`
   position: fixed;
@@ -36,9 +34,7 @@ const StyledModal = styled.div`
 function Modal(props) {
   return (
     <StyledModal isGameWon={props.isGameWon}>
-      <CloseIcon onClick={props.closeEndgameModal} />
       <div>{props.children}</div>
-      <Button onClick={props.closeEndgameModal}>Play again</Button>
     </StyledModal>
   );
 }
