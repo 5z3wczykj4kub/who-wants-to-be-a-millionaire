@@ -26,6 +26,7 @@ const StyledGame = styled.div`
   width: 100%;
   max-width: 50rem;
   margin-bottom: 0.5rem;
+  pointer-events: ${(props) => (props.isLoading ? 'none' : 'auto')};
 `;
 
 function Game() {
@@ -197,7 +198,7 @@ function Game() {
   );
 
   return (
-    <StyledGame>
+    <StyledGame isLoading={isLoading}>
       <Logo />
       <Lifelines
         isFiftyFiftyLifelineDisabled={isFiftyFiftyLifelineDisabled}
