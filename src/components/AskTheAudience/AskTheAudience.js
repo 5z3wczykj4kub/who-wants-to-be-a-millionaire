@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react/cjs/react.development';
+import { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 
 import Bar from '../Bar/Bar';
