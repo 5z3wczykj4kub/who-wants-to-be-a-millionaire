@@ -1,4 +1,4 @@
-import { useEffect } from 'react/cjs/react.development';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { ReactComponent as Diamond } from '../../assets/svg/diamond.svg';
