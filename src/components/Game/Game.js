@@ -18,6 +18,7 @@ import Button from '../Button/Button';
 
 import money from '../../utils/money';
 import { gameWonMessage, gameLostMessage } from '../../utils/endgameMessages';
+import PhoneAFriend from '../PhoneAFriend/PhoneAFriend';
 
 const StyledGame = styled.div`
   display: flex;
@@ -52,13 +53,19 @@ function Game() {
   const [correctAnwserIndex, setCorrectAnwserIndex] = useState();
   const [remainingIncorrectAnwserIndex, setRemainingIncorrectAnwserIndex] =
     useState();
+  const [isPhoneAFriendLifelineUsed, setIsPhoneAFriendLifelineUsed] =
+    useState(false);
+  const [
+    isPhoneAFriendLifelineModalVisible,
+    setIsPhoneAFriendLifelineModalVisible,
+  ] = useState(false);
 
   useEffect(
     function outputCorrectAnwsersInDevToolsConsole() {
-      if (questions.length > 0)
-        console.log(questions[currentQuestionIndex].correct_answer);
+      if (!isLoading && correctAnwserIndex !== undefined)
+        console.log(String.fromCharCode(97 + correctAnwserIndex).toUpperCase());
     },
-    [currentQuestionIndex, questions]
+    [isLoading, correctAnwserIndex]
   );
 
   useEffect(() => fetchQuestionsFromAPI(), []);
@@ -159,14 +166,21 @@ function Game() {
     setRemainingIncorrectAnwserIndex(index);
   }, []);
 
+  function usePhoneAFriendLifelineHandler() {
+    if (isPhoneAFriendLifelineUsed) return;
+    setIsPhoneAFriendLifelineModalVisible(true);
+    setIsPhoneAFriendLifelineUsed(true);
+  }
+
   function resetTheGame() {
     if (isGameWon) setIsGameWon(false);
     if (isGameLost) setIsGameLost(false);
     setIsEndgameModalVisible(false);
     setIsFiftyFiftyLifelineUsed(false);
     setIsFiftyFiftyLifelineDisabled(false);
-    setIsChangeQuestionLifelineUsed(false);
     setIsAskTheAudienceLifelineUsed(false);
+    setIsChangeQuestionLifelineUsed(false);
+    setIsPhoneAFriendLifelineUsed(false);
     fetchQuestionsFromAPI();
     setIsLoading(true);
   }
@@ -204,9 +218,11 @@ function Game() {
         isFiftyFiftyLifelineDisabled={isFiftyFiftyLifelineDisabled}
         isChangeQuestionLifelineUsed={isChangeQuestionLifelineUsed}
         isAskTheAudienceLifelineUsed={isAskTheAudienceLifelineUsed}
+        isPhoneAFriendLifelineUsed={isPhoneAFriendLifelineUsed}
         useFiftyFiftyLifeline={useFiftyFiftyLifelineHandler}
-        useChangeQuestionLifeline={useChangeQuestionLifelineHandler}
+        usePhoneAFriendLifeline={usePhoneAFriendLifelineHandler}
         showAskTheAudienceBarGraph={showAskTheAudienceBarGraphHandler}
+        useChangeQuestionLifeline={useChangeQuestionLifelineHandler}
       />
       <Question
         isLoading={isLoading}
@@ -216,6 +232,23 @@ function Game() {
         {question}
       </Question>
       {anwsers}
+      {isPhoneAFriendLifelineModalVisible && (
+        <>
+          <Backdrop
+            onClick={() => setIsPhoneAFriendLifelineModalVisible(false)}
+          />
+          <PhoneAFriend>
+            <CloseIcon
+              color="#fff"
+              onClick={() => setIsPhoneAFriendLifelineModalVisible(false)}
+            />
+            <p>
+              Correct anwser:{' '}
+              {String.fromCharCode(97 + correctAnwserIndex).toUpperCase()}
+            </p>
+          </PhoneAFriend>
+        </>
+      )}
       {isAskTheAudienceBarGraphVisible && (
         <>
           <Backdrop onClick={hideAskTheAudienceBarGraphHandler} />

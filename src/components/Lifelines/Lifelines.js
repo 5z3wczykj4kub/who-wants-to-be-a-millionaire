@@ -18,7 +18,11 @@ function Lifelines(props) {
         isDisabled={props.isFiftyFiftyLifelineDisabled}
         onClick={props.useFiftyFiftyLifeline}
       />
-      <Lifeline icon={faPhone} />
+      <Lifeline
+        icon={faPhone}
+        isDisabled={props.isPhoneAFriendLifelineUsed}
+        onClick={props.usePhoneAFriendLifeline}
+      />
       <Lifeline
         icon={faUsers}
         isDisabled={props.isAskTheAudienceLifelineUsed}
