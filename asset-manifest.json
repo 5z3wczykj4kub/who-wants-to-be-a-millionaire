@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/who-wants-to-be-a-millionaire/static/css/main.f599c06d.chunk.css",
-    "main.js": "/who-wants-to-be-a-millionaire/static/js/main.36586efa.chunk.js",
-    "main.js.map": "/who-wants-to-be-a-millionaire/static/js/main.36586efa.chunk.js.map",
-    "runtime-main.js": "/who-wants-to-be-a-millionaire/static/js/runtime-main.02f5a147.js",
-    "runtime-main.js.map": "/who-wants-to-be-a-millionaire/static/js/runtime-main.02f5a147.js.map",
-    "static/js/2.3996ad32.chunk.js": "/who-wants-to-be-a-millionaire/static/js/2.3996ad32.chunk.js",
-    "static/js/2.3996ad32.chunk.js.map": "/who-wants-to-be-a-millionaire/static/js/2.3996ad32.chunk.js.map",
-    "static/js/3.c8f0ddb4.chunk.js": "/who-wants-to-be-a-millionaire/static/js/3.c8f0ddb4.chunk.js",
-    "static/js/3.c8f0ddb4.chunk.js.map": "/who-wants-to-be-a-millionaire/static/js/3.c8f0ddb4.chunk.js.map",
+    "main.js": "/who-wants-to-be-a-millionaire/static/js/main.d6fc4987.chunk.js",
+    "main.js.map": "/who-wants-to-be-a-millionaire/static/js/main.d6fc4987.chunk.js.map",
+    "runtime-main.js": "/who-wants-to-be-a-millionaire/static/js/runtime-main.9e26a458.js",
+    "runtime-main.js.map": "/who-wants-to-be-a-millionaire/static/js/runtime-main.9e26a458.js.map",
+    "static/js/2.6b4dd0d5.chunk.js": "/who-wants-to-be-a-millionaire/static/js/2.6b4dd0d5.chunk.js",
+    "static/js/2.6b4dd0d5.chunk.js.map": "/who-wants-to-be-a-millionaire/static/js/2.6b4dd0d5.chunk.js.map",
+    "static/js/3.86d049b7.chunk.js": "/who-wants-to-be-a-millionaire/static/js/3.86d049b7.chunk.js",
+    "static/js/3.86d049b7.chunk.js.map": "/who-wants-to-be-a-millionaire/static/js/3.86d049b7.chunk.js.map",
     "index.html": "/who-wants-to-be-a-millionaire/index.html",
     "static/css/main.f599c06d.chunk.css.map": "/who-wants-to-be-a-millionaire/static/css/main.f599c06d.chunk.css.map",
-    "static/js/2.3996ad32.chunk.js.LICENSE.txt": "/who-wants-to-be-a-millionaire/static/js/2.3996ad32.chunk.js.LICENSE.txt",
+    "static/js/2.6b4dd0d5.chunk.js.LICENSE.txt": "/who-wants-to-be-a-millionaire/static/js/2.6b4dd0d5.chunk.js.LICENSE.txt",
     "static/media/diamond.29013272.svg": "/who-wants-to-be-a-millionaire/static/media/diamond.29013272.svg",
     "static/media/happyPepe.283cf61f.gif": "/who-wants-to-be-a-millionaire/static/media/happyPepe.283cf61f.gif",
     "static/media/logo.a3450ddc.png": "/who-wants-to-be-a-millionaire/static/media/logo.a3450ddc.png",
@@ -19,9 +19,9 @@
     "static/media/sadPepe.5ea98b37.gif": "/who-wants-to-be-a-millionaire/static/media/sadPepe.5ea98b37.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.02f5a147.js",
-    "static/js/2.3996ad32.chunk.js",
+    "static/js/runtime-main.9e26a458.js",
+    "static/js/2.6b4dd0d5.chunk.js",
     "static/css/main.f599c06d.chunk.css",
-    "static/js/main.36586efa.chunk.js"
+    "static/js/main.d6fc4987.chunk.js"
   ]
 }
