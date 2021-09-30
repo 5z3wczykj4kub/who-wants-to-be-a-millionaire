@@ -85,6 +85,16 @@ function Anwsers(props) {
                   : false
               }
               isLoading={props.isLoading}
+              remainingIncorrectAnwserIndex={
+                anwsers.findIndex(
+                  (anwser) => anwser === props.correctAnwser
+                ) !== index
+                  ? index
+                  : null
+              }
+              getRemainingIncorrectAnwserIndex={
+                props.getRemainingIncorrectAnwserIndex
+              }
             >
               {anwser}
             </Anwser>

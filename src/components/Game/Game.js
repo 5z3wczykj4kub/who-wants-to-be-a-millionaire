@@ -49,6 +49,8 @@ function Game() {
   const [isAskTheAudienceBarGraphVisible, setIsAskTheAudienceBarGraphVisible] =
     useState(false);
   const [correctAnwserIndex, setCorrectAnwserIndex] = useState();
+  const [remainingIncorrectAnwserIndex, setRemainingIncorrectAnwserIndex] =
+    useState();
 
   useEffect(
     function outputCorrectAnwsersInDevToolsConsole() {
@@ -152,6 +154,10 @@ function Game() {
     [questions, currentQuestionIndex]
   );
 
+  const getRemainingIncorrectAnwserIndex = useCallback((index) => {
+    setRemainingIncorrectAnwserIndex(index);
+  }, []);
+
   function resetTheGame() {
     if (isGameWon) setIsGameWon(false);
     if (isGameLost) setIsGameLost(false);
@@ -183,6 +189,7 @@ function Game() {
       }
       checkAnwser={checkAnwserHandler}
       getIndexOfCorrectAnwser={getIndexOfCorrectAnwser}
+      getRemainingIncorrectAnwserIndex={getRemainingIncorrectAnwserIndex}
       isAskTheAudienceLifelineUsed={isAskTheAudienceLifelineUsed}
     />
   ) : (
@@ -213,7 +220,8 @@ function Game() {
           <Backdrop onClick={hideAskTheAudienceBarGraphHandler} />
           <AskTheAudience
             correctAnwserIndex={correctAnwserIndex}
-            isFiftyFiftyLifelineDisabled={isFiftyFiftyLifelineDisabled}
+            isFiftyFiftyLifelineUsed={isFiftyFiftyLifelineUsed}
+            remainingIncorrectAnwserIndex={remainingIncorrectAnwserIndex}
           >
             <CloseIcon
               color="#fff"

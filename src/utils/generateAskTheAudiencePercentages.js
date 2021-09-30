@@ -9,8 +9,9 @@ function generateAskTheAudiencePercentages(isFiftyFiftyLifelineUsed = false) {
   const pretcentagesArray = [correctAnwserPercentage];
   let remainingPercentages = 100 - correctAnwserPercentage;
 
-  if (isFiftyFiftyLifelineUsed)
-    return [...pretcentagesArray, remainingPercentages];
+  if (isFiftyFiftyLifelineUsed) {
+    return [...pretcentagesArray, remainingPercentages, 0, 0];
+  }
 
   while (remainingPercentages > 0) {
     if (pretcentagesArray.length === 3) {

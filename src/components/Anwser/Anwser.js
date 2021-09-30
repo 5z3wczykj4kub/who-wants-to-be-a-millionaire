@@ -1,3 +1,4 @@
+import { useEffect } from 'react/cjs/react.development';
 import styled from 'styled-components';
 
 import { ReactComponent as Diamond } from '../../assets/svg/diamond.svg';
@@ -45,6 +46,18 @@ const StyledAnwser = styled.button`
 `;
 
 function Anwser(props) {
+  const { remainingIncorrectAnwserIndex, getRemainingIncorrectAnwserIndex } =
+    props;
+
+  useEffect(() => {
+    if (
+      remainingIncorrectAnwserIndex !== null &&
+      remainingIncorrectAnwserIndex !== undefined
+    ) {
+      getRemainingIncorrectAnwserIndex(remainingIncorrectAnwserIndex);
+    }
+  }, [remainingIncorrectAnwserIndex, getRemainingIncorrectAnwserIndex]);
+
   return (
     <StyledAnwser
       isEmpty={props.isEmpty}

@@ -1,7 +1,8 @@
+import { useEffect, useState, useCallback } from 'react/cjs/react.development';
+import styled from 'styled-components';
+
 import Bar from '../Bar/Bar';
 import generateAskTheAudiencePercentages from '../../utils/generateAskTheAudiencePercentages';
-
-import styled from 'styled-components';
 
 const StyledAskTheAudience = styled.div`
   position: fixed;
@@ -53,43 +54,49 @@ const StyledAskTheAudience = styled.div`
 
 function AskTheAudience({
   correctAnwserIndex,
+  remainingIncorrectAnwserIndex,
+  isFiftyFiftyLifelineUsed,
   children,
-  isFiftyFiftyLifelineDisabled,
 }) {
-  function generateBars(isFiftyFiftyLifelineUsed = false) {
-    const percentages = generateAskTheAudiencePercentages(
-      isFiftyFiftyLifelineUsed
-    );
-    if (isFiftyFiftyLifelineUsed) {
-      return [
-        percentages.map((percentage, index) => (
-          <span key={index}>{percentage}%</span>
-        )),
-        percentages.map((percentage, index) => (
-          <Bar key={index} height={percentage} />
-        )),
-      ];
-    }
-    const aux = percentages[correctAnwserIndex];
-    percentages[correctAnwserIndex] = percentages[0];
-    percentages[0] = aux;
-    return [
-      percentages.map((percentage, index) => (
-        <span key={index}>{percentage}%</span>
-      )),
-      percentages.map((percentage, index) => (
-        <Bar key={index} height={percentage} />
-      )),
-    ];
-  }
-  const generatedBars = generateBars(isFiftyFiftyLifelineDisabled);
+  const [percentages, setPercentages] = useState([]);
+
+  const generateBars = useCallback(
+    (isFiftyFiftyLifelineUsed = false) => {
+      const percentages = generateAskTheAudiencePercentages(
+        isFiftyFiftyLifelineUsed
+      );
+      if (isFiftyFiftyLifelineUsed) {
+        const fiftyFiftyPercentages = [0, 0, 0, 0];
+        fiftyFiftyPercentages[correctAnwserIndex] = percentages[0];
+        fiftyFiftyPercentages[remainingIncorrectAnwserIndex] = percentages[1];
+        return fiftyFiftyPercentages;
+      }
+      const aux = percentages[correctAnwserIndex];
+      percentages[correctAnwserIndex] = percentages[0];
+      percentages[0] = aux;
+      return percentages;
+    },
+    [correctAnwserIndex, remainingIncorrectAnwserIndex]
+  );
+
+  useEffect(() => {
+    setPercentages(generateBars(isFiftyFiftyLifelineUsed));
+  }, [generateBars, isFiftyFiftyLifelineUsed]);
 
   return (
     <StyledAskTheAudience>
       {children}
       <section>
-        <header>{generatedBars[0]}</header>
-        <main>{generatedBars[1]}</main>
+        <header>
+          {percentages.map((percentage, index) => (
+            <span key={index}>{percentage}%</span>
+          ))}
+        </header>
+        <main>
+          {percentages.map((percentage, index) => (
+            <Bar key={index} height={percentage} />
+          ))}
+        </main>
         <footer>
           <span>A</span>
           <span>B</span>
