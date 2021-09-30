@@ -1,3 +1,6 @@
+import Bar from '../Bar/Bar';
+import generateAskTheAudiencePercentages from '../../utils/generateAskTheAudiencePercentages';
+
 import styled from 'styled-components';
 
 const StyledAskTheAudience = styled.div`
@@ -42,41 +45,51 @@ const StyledAskTheAudience = styled.div`
     main {
       display: flex;
       justify-content: space-evenly;
+      align-items: flex-end;
       height: 100%;
-
-      div {
-        width: 15%;
-        height: 100%;
-        background: linear-gradient(
-          to right,
-          #eaeaea,
-          #dbdbdb,
-          #f2f2f2,
-          #ada996
-        );
-        border-radius: 0.25rem 0.25rem 0 0;
-      }
     }
   }
 `;
 
-function AskTheAudience(props) {
+function AskTheAudience({
+  correctAnwserIndex,
+  children,
+  isFiftyFiftyLifelineDisabled,
+}) {
+  function generateBars(isFiftyFiftyLifelineUsed = false) {
+    const percentages = generateAskTheAudiencePercentages(
+      isFiftyFiftyLifelineUsed
+    );
+    if (isFiftyFiftyLifelineUsed) {
+      return [
+        percentages.map((percentage, index) => (
+          <span key={index}>{percentage}%</span>
+        )),
+        percentages.map((percentage, index) => (
+          <Bar key={index} height={percentage} />
+        )),
+      ];
+    }
+    const aux = percentages[correctAnwserIndex];
+    percentages[correctAnwserIndex] = percentages[0];
+    percentages[0] = aux;
+    return [
+      percentages.map((percentage, index) => (
+        <span key={index}>{percentage}%</span>
+      )),
+      percentages.map((percentage, index) => (
+        <Bar key={index} height={percentage} />
+      )),
+    ];
+  }
+  const generatedBars = generateBars(isFiftyFiftyLifelineDisabled);
+
   return (
     <StyledAskTheAudience>
-      {props.children}
+      {children}
       <section>
-        <header>
-          <span>60%</span>
-          <span>60%</span>
-          <span>60%</span>
-          <span>60%</span>
-        </header>
-        <main>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </main>
+        <header>{generatedBars[0]}</header>
+        <main>{generatedBars[1]}</main>
         <footer>
           <span>A</span>
           <span>B</span>

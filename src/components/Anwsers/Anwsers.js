@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Anwser from '../Anwser/Anwser';
@@ -19,6 +19,18 @@ function Anwsers(props) {
       ]);
     }
   }, [props.isLoading, props.incorrectAnwsers, props.correctAnwser]);
+
+  const { isLoading, getIndexOfCorrectAnwser, isAskTheAudienceLifelineUsed } =
+    props;
+
+  useEffect(() => {
+    if (!isLoading) getIndexOfCorrectAnwser(anwsers);
+  }, [
+    isLoading,
+    getIndexOfCorrectAnwser,
+    isAskTheAudienceLifelineUsed,
+    anwsers,
+  ]);
 
   let anwsersList = (
     <>

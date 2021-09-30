@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Confetti from 'react-confetti';
 import { useWindowSize } from 'react-use';
 import styled from 'styled-components';
@@ -48,6 +48,7 @@ function Game() {
     useState(false);
   const [isAskTheAudienceBarGraphVisible, setIsAskTheAudienceBarGraphVisible] =
     useState(false);
+  const [correctAnwserIndex, setCorrectAnwserIndex] = useState();
 
   useEffect(
     function outputCorrectAnwsersInDevToolsConsole() {
@@ -140,6 +141,17 @@ function Game() {
     setIsAskTheAudienceBarGraphVisible(false);
   }
 
+  const getIndexOfCorrectAnwser = useCallback(
+    (anwsers) => {
+      setCorrectAnwserIndex(
+        anwsers.findIndex(
+          (anwser) => anwser === questions[currentQuestionIndex].correct_answer
+        )
+      );
+    },
+    [questions, currentQuestionIndex]
+  );
+
   function resetTheGame() {
     if (isGameWon) setIsGameWon(false);
     if (isGameLost) setIsGameLost(false);
@@ -170,6 +182,8 @@ function Game() {
           : null
       }
       checkAnwser={checkAnwserHandler}
+      getIndexOfCorrectAnwser={getIndexOfCorrectAnwser}
+      isAskTheAudienceLifelineUsed={isAskTheAudienceLifelineUsed}
     />
   ) : (
     <Anwsers isLoading={isLoading} />
@@ -197,7 +211,10 @@ function Game() {
       {isAskTheAudienceBarGraphVisible && (
         <>
           <Backdrop onClick={hideAskTheAudienceBarGraphHandler} />
-          <AskTheAudience>
+          <AskTheAudience
+            correctAnwserIndex={correctAnwserIndex}
+            isFiftyFiftyLifelineDisabled={isFiftyFiftyLifelineDisabled}
+          >
             <CloseIcon
               color="#fff"
               onClick={hideAskTheAudienceBarGraphHandler}
