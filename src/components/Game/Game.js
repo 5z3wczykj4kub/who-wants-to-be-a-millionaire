@@ -15,10 +15,10 @@ import MoneyLadder from '../MoneyLadder/MoneyLadder';
 import AskTheAudience from '../AskTheAudience/AskTheAudience';
 import CloseIcon from '../CloseIcon/CloseIcon';
 import Button from '../Button/Button';
+import PhoneAFriend from '../PhoneAFriend/PhoneAFriend';
 
 import money from '../../utils/money';
 import { gameWonMessage, gameLostMessage } from '../../utils/endgameMessages';
-import PhoneAFriend from '../PhoneAFriend/PhoneAFriend';
 
 const StyledGame = styled.div`
   display: flex;
@@ -244,7 +244,9 @@ function Game() {
             />
             <p>
               Correct anwser:{' '}
-              {String.fromCharCode(97 + correctAnwserIndex).toUpperCase()}
+              <b>
+                {String.fromCharCode(97 + correctAnwserIndex).toUpperCase()}
+              </b>
             </p>
           </PhoneAFriend>
         </>
@@ -270,7 +272,8 @@ function Game() {
           <Modal isGameWon={isGameWon}>
             <CloseIcon onClick={closeEndgameModalHandler} />
             {isGameWon && gameWonMessage}
-            {isGameLost && gameLostMessage}
+            {isGameLost &&
+              gameLostMessage(correctAnwserIndex, money[currentQuestionIndex])}
             <Button onClick={closeEndgameModalHandler}>Play again</Button>
           </Modal>
         </>

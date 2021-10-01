@@ -7,13 +7,24 @@ export const gameWonMessage = (
     <p>
       <span>Congratulations!</span>
     </p>
-    <p>You're officially a millionaire.</p>
+    <p>
+      You're officially a <span>millionaire</span>
+    </p>
   </>
 );
-export const gameLostMessage = (
-  <>
-    <img src={sadPepeGif} alt="sad pepe gif" />
-    <p>I'm sorry. You lost.</p>
-    <p>Maybe next time you'll be more lucky.</p>
-  </>
-);
+export const gameLostMessage = (correctAnwserIndex, money) => {
+  return (
+    <>
+      <img src={sadPepeGif} alt="sad pepe gif" />
+      <p>
+        Correct anwser:{' '}
+        <span>
+          {String.fromCharCode(97 + correctAnwserIndex).toUpperCase()}
+        </span>
+      </p>
+      <p>
+        You won <span>${money}</span>
+      </p>
+    </>
+  );
+};

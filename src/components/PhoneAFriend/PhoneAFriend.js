@@ -6,6 +6,7 @@ const StyledPhoneAFriend = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
+  z-index: 1;
   transform: translate(-50%, -50%);
   width: 90%;
   max-width: 18rem;
